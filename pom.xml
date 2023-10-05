@@ -13,7 +13,7 @@
     </properties>
 
     <groupId>com.cisco.josouthe</groupId>
-    <artifactId>AgentLimitAlerting</artifactId>
+    <artifactId>Tagging</artifactId>
     <version>${version}-${timestamp}</version>
     <!-- <packaging>jar</packaging>  -->
 
@@ -43,7 +43,7 @@
             <artifactId>common-utils</artifactId>
             <version>22.8.0.34104</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/comon-utils-v22.8.0.34104.jar</systemPath>
+            <systemPath>${project.basedir}/lib/common-utils-v22.8.0.34104.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.appdynamics.agent</groupId>
@@ -189,8 +189,8 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                         <manifestEntries>
-                            <Implementation-Title>agent-limit-alerting-service</Implementation-Title>
-                            <implementation-class-name>com.singularity.ee.service.limitAlerting.LimitAlertingService</implementation-class-name>
+                            <Implementation-Title>agent-gcp-tagging-service</Implementation-Title>
+                            <implementation-class-name>com.singularity.ee.service.tagging.TaggingService</implementation-class-name>
                             <Implementation-Version>v1.0</Implementation-Version>
                             <Implementation-Vendor>AppDynamics Field Architecture Team</Implementation-Vendor>
                         </manifestEntries>
@@ -203,7 +203,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptor>assembly-deployment.xml</descriptor>
-                    <finalName>appdynamics-agent-LimitAlerting-${pom.version}</finalName>
+                    <finalName>appdynamics-agent-Tagging-${pom.version}</finalName>
                 </configuration>
                 <executions>
                     <execution>

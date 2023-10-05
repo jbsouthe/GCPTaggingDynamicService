@@ -3,4 +3,4 @@ target/
 *.zip
 **/.DS_Store
 .idea
-src/main/java/com/singularity/ee/service/limitAlerting/MetaData.java
+src/main/java/com/singularity/ee/service/tagging/MetaData.java

@@ -1,4 +1,4 @@
-package com.singularity.ee.service.limitAlerting;
+package com.singularity.ee.service.tagging;
 
 import com.singularity.ee.agent.appagent.kernel.spi.data.IServiceConfig;
 import com.singularity.ee.agent.util.log4j.ADLoggerFactory;

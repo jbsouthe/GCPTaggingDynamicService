@@ -20,7 +20,7 @@
     </fileSets>
     <files>
         <file>
-            <source>AgentLimitAlerting-${pom.version}.jar</source>
+            <source>Tagging-${pom.version}.jar</source>
             <outputDirectory>.</outputDirectory>
             <destName>StatisticalSampler.jar</destName>
         </file>

@@ -1,4 +1,4 @@
-package com.singularity.ee.service.limitAlerting;
+package com.singularity.ee.service.tagging;
 
 import com.singularity.ee.agent.appagent.kernel.ServiceComponent;
 import com.singularity.ee.agent.appagent.kernel.spi.IDynamicService;
@@ -9,14 +9,14 @@ import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 
 import java.util.Map;
 
-public class LimitAlertingMetricTask implements IAgentRunnable {
-    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.LimitAlertingMetricTask");
+public class GCPTaggingTask implements IAgentRunnable {
+    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.GCPTaggingTask");
     private IDynamicService agentService;
     private AgentNodeProperties agentNodeProperties;
     private ServiceComponent serviceComponent;
     private IServiceContext serviceContext;
 
-    public LimitAlertingMetricTask(IDynamicService agentService, AgentNodeProperties agentNodeProperties, ServiceComponent serviceComponent, IServiceContext iServiceContext) {
+    public GCPTaggingTask (IDynamicService agentService, AgentNodeProperties agentNodeProperties, ServiceComponent serviceComponent, IServiceContext iServiceContext) {
         this.agentNodeProperties=agentNodeProperties;
         this.agentService=agentService;
         this.serviceComponent=serviceComponent;
@@ -36,7 +36,11 @@ public class LimitAlertingMetricTask implements IAgentRunnable {
      */
     @Override
     public void run() {
-        serviceComponent.getMetricHandler().reportAverageMetric("Agent|Limit Alerting|Enabled", (agentNodeProperties.isEnabled() ? 1 : 0));
+        if(!agentNodeProperties.isEnabled()) {
+            logger.info("Service " + agentService.getName() + " is not enabled. To enable it enable the node property agent.GCPTaggingTask.enabled");
+            return;
+        }
+
     }
 
     private void sendInfoEvent(String message) {

@@ -1,4 +1,4 @@
-package com.singularity.ee.service.limitAlerting;
+package com.singularity.ee.service.tagging;
 
 import com.singularity.ee.agent.appagent.kernel.LifeCycleManager;
 import com.singularity.ee.agent.appagent.kernel.ServiceComponent;
@@ -17,10 +17,10 @@ import com.singularity.ee.util.spi.IAgentScheduledExecutorService;
 import com.singularity.ee.util.spi.IAgentScheduledFuture;
 import com.singularity.ee.util.system.SystemUtils;
 
-public class LimitAlertingService implements IDynamicService {
+public class TaggingService implements IDynamicService {
 
     private AgentNodeProperties agentNodeProperties = new AgentNodeProperties();
-    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.LimitAlertingService");
+    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.TaggingService");
     private boolean isServiceStarted = false;
     private IAgentScheduledFuture scheduledTaskFuture, scheduledMetricTaskFuture;
     private final ServiceComponent serviceComponent = LifeCycleManager.getInjector();
@@ -30,12 +30,12 @@ public class LimitAlertingService implements IDynamicService {
     private IServiceContext iServiceContext;
     private IDynamicServiceManager dynamicServiceManager;
 
-    public LimitAlertingService() {
+    public TaggingService () {
         logger.info(String.format("Initializing Agent %s %s build date %s by %s visit %s for the most up to date information.",
                 MetaData.SERVICENAME, MetaData.VERSION, MetaData.BUILDTIMESTAMP, MetaData.GECOS, MetaData.DEVNET));
     }
 
-    public LimitAlertingService(AgentNodeProperties agentNodeProperties, long taskInitialDelay, long taskInterval) {
+    public TaggingService (AgentNodeProperties agentNodeProperties, long taskInitialDelay, long taskInterval) {
         this();
         this.agentNodeProperties = agentNodeProperties;
         this.taskInitialDelay = taskInitialDelay;
@@ -86,7 +86,7 @@ public class LimitAlertingService implements IDynamicService {
 
     private IAgentRunnable createTask(ServiceComponent serviceComponent) {
         logger.info("Creating Task for "+ MetaData.SERVICENAME);
-        return new LimitAlertingTask( this, this.agentNodeProperties, serviceComponent, iServiceContext);
+        return new GCPTaggingTask( this, this.agentNodeProperties, serviceComponent, iServiceContext);
     }
 
     @Override
