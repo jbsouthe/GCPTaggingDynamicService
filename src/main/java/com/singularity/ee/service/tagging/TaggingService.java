@@ -11,6 +11,8 @@ import com.singularity.ee.agent.appagent.kernel.spi.exception.ServiceStartExcept
 import com.singularity.ee.agent.appagent.kernel.spi.exception.ServiceStopException;
 import com.singularity.ee.agent.util.log4j.ADLoggerFactory;
 import com.singularity.ee.agent.util.log4j.IADLogger;
+import com.singularity.ee.service.tagging.task.GCPTaggingTask;
+import com.singularity.ee.service.tagging.task.TaggingMetricTask;
 import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 import com.singularity.ee.util.spi.AgentTimeUnit;
 import com.singularity.ee.util.spi.IAgentScheduledExecutorService;

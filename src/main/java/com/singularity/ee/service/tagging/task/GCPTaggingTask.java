@@ -1,10 +1,12 @@
-package com.singularity.ee.service.tagging;
+package com.singularity.ee.service.tagging.task;
 
 import com.singularity.ee.agent.appagent.kernel.ServiceComponent;
 import com.singularity.ee.agent.appagent.kernel.spi.IDynamicService;
 import com.singularity.ee.agent.appagent.kernel.spi.IServiceContext;
 import com.singularity.ee.agent.util.log4j.ADLoggerFactory;
 import com.singularity.ee.agent.util.log4j.IADLogger;
+import com.singularity.ee.service.tagging.AgentNodeProperties;
+import com.singularity.ee.service.tagging.MetaData;
 import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 
 import java.util.Map;
