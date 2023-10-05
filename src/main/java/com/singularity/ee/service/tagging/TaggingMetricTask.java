@@ -9,14 +9,14 @@ import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 
 import java.util.Map;
 
-public class LimitAlertingMetricTask implements IAgentRunnable {
-    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.LimitAlertingMetricTask");
+public class TaggingMetricTask implements IAgentRunnable {
+    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.tagging.TaggingMetricTask");
     private IDynamicService agentService;
     private AgentNodeProperties agentNodeProperties;
     private ServiceComponent serviceComponent;
     private IServiceContext serviceContext;
 
-    public LimitAlertingMetricTask(IDynamicService agentService, AgentNodeProperties agentNodeProperties, ServiceComponent serviceComponent, IServiceContext iServiceContext) {
+    public TaggingMetricTask (IDynamicService agentService, AgentNodeProperties agentNodeProperties, ServiceComponent serviceComponent, IServiceContext iServiceContext) {
         this.agentNodeProperties=agentNodeProperties;
         this.agentService=agentService;
         this.serviceComponent=serviceComponent;
@@ -36,7 +36,7 @@ public class LimitAlertingMetricTask implements IAgentRunnable {
      */
     @Override
     public void run() {
-        serviceComponent.getMetricHandler().reportAverageMetric("Agent|Limit Alerting|Enabled", (agentNodeProperties.isEnabled() ? 1 : 0));
+        serviceComponent.getMetricHandler().reportAverageMetric("Agent|Tagging|Enabled", (agentNodeProperties.isEnabled() ? 1 : 0));
     }
 
     private void sendInfoEvent(String message) {

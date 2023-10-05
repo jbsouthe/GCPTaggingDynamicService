@@ -15,12 +15,11 @@ import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 import com.singularity.ee.util.spi.AgentTimeUnit;
 import com.singularity.ee.util.spi.IAgentScheduledExecutorService;
 import com.singularity.ee.util.spi.IAgentScheduledFuture;
-import com.singularity.ee.util.system.SystemUtils;
 
 public class TaggingService implements IDynamicService {
 
     private AgentNodeProperties agentNodeProperties = new AgentNodeProperties();
-    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.TaggingService");
+    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.tagging.TaggingService");
     private boolean isServiceStarted = false;
     private IAgentScheduledFuture scheduledTaskFuture, scheduledMetricTaskFuture;
     private final ServiceComponent serviceComponent = LifeCycleManager.getInjector();
@@ -81,7 +80,7 @@ public class TaggingService implements IDynamicService {
 
     private IAgentRunnable createMetricTask(ServiceComponent serviceComponent) {
         logger.info("Creating Metric Sending Task for "+ MetaData.SERVICENAME);
-        return new LimitAlertingMetricTask( this, this.agentNodeProperties, serviceComponent, iServiceContext);
+        return new TaggingMetricTask( this, this.agentNodeProperties, serviceComponent, iServiceContext);
     }
 
     private IAgentRunnable createTask(ServiceComponent serviceComponent) {
@@ -106,8 +105,6 @@ public class TaggingService implements IDynamicService {
             this.scheduledMetricTaskFuture.cancel(true);
             this.scheduledMetricTaskFuture = null;
             this.isServiceStarted = false;
-            serviceComponent.getMetricHandler().getMetricService().hotEnable(); // when we stop the service, enable metrics again
-            serviceComponent.getEventHandler().getEventService().hotEnable(); //enable all events again :)
         }
     }
 

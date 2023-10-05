@@ -10,7 +10,7 @@ import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 import java.util.Map;
 
 public class GCPTaggingTask implements IAgentRunnable {
-    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.limitAlerting.GCPTaggingTask");
+    private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.tagging.GCPTaggingTask");
     private IDynamicService agentService;
     private AgentNodeProperties agentNodeProperties;
     private ServiceComponent serviceComponent;
@@ -37,7 +37,7 @@ public class GCPTaggingTask implements IAgentRunnable {
     @Override
     public void run() {
         if(!agentNodeProperties.isEnabled()) {
-            logger.info("Service " + agentService.getName() + " is not enabled. To enable it enable the node property agent.GCPTaggingTask.enabled");
+            logger.info("Service " + agentService.getName() + " is not enabled. To enable it enable the node property "+ AgentNodeProperties.ENABLED_PROPERTY);
             return;
         }
 
