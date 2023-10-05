@@ -143,6 +143,22 @@ public class GCPTaggingTask implements IAgentRunnable {
         if( System.currentTimeMillis() < this.lastSyncTimestamp + (agentNodeProperties.getSyncFrequencyMinutes()*60000) )
             return; //only run this every 15 minutes, ish
 
+        GCEInstance gceInstance = null;
+        try {
+            gceInstance = fetchInstanceData();
+        } catch (IOException e) {
+            logger.error("Error fetching GCP Instance Data");
+        }
+
+        if( gceInstance == null ) return; //give up
+
+        BatchTaggingRequest batchTaggingRequest = new BatchTaggingRequest(gceInstance, serviceComponent.getConfigManager().getIConfigChannel());
+        try {
+            uploadTagsToController(batchTaggingRequest);
+        } catch (CommunicationErrorException e) {
+            logger.error("Communication Error in uploading tags: "+ e.getMessage());
+        }
+
     }
 
     private void sendInfoEvent(String message) {
@@ -224,8 +240,6 @@ public class GCPTaggingTask implements IAgentRunnable {
                 }
                 in.close();
 
-                // Deserialize JSON response
-                Gson gson = new Gson();
                 AccessToken accessToken = gson.fromJson(response.toString(), AccessToken.class);
                 connection.disconnect();
                 return accessToken.access_token;
