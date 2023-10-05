@@ -11,8 +11,9 @@ import java.util.Observable;
 
 public class AgentNodeProperties extends Observable {
     private static final IADLogger logger = ADLoggerFactory.getLogger((String)"com.singularity.dynamicservice.tagging.AgentNodeProperties");
-    public static final String ENABLED_PROPERTY = "agent.limitAlerting.enabled";
-    public static final String[] NODE_PROPERTIES = new String[]{ENABLED_PROPERTY};
+    public static final String ENABLED_PROPERTY = "agent.tagging.enabled";
+    public static final String SYNC_FREQUENCY_PROPERTY = "agent.tagging.frequency.minutes";
+    public static final String[] NODE_PROPERTIES = new String[]{ENABLED_PROPERTY, SYNC_FREQUENCY_PROPERTY};
     private final Map<String, String> properties = new HashMap<>();
 
     public void initializeConfigs(IServiceConfig serviceConfig) {
@@ -54,4 +55,7 @@ public class AgentNodeProperties extends Observable {
         return StringOperations.safeParseBoolean((String)this.getProperty(ENABLED_PROPERTY), (boolean)false);
     }
 
+    public long getSyncFrequencyMinutes () {
+        return StringOperations.safeParseLong((String)this.getProperty(SYNC_FREQUENCY_PROPERTY), (long)20);
+    }
 }

@@ -11,12 +11,16 @@ import com.singularity.ee.agent.appagent.kernel.spi.exception.ServiceStartExcept
 import com.singularity.ee.agent.appagent.kernel.spi.exception.ServiceStopException;
 import com.singularity.ee.agent.util.log4j.ADLoggerFactory;
 import com.singularity.ee.agent.util.log4j.IADLogger;
+import com.singularity.ee.service.tagging.exception.ConfigurationException;
+import com.singularity.ee.service.tagging.exception.NotRunningOnException;
 import com.singularity.ee.service.tagging.task.GCPTaggingTask;
 import com.singularity.ee.service.tagging.task.TaggingMetricTask;
 import com.singularity.ee.util.javaspecific.threads.IAgentRunnable;
 import com.singularity.ee.util.spi.AgentTimeUnit;
 import com.singularity.ee.util.spi.IAgentScheduledExecutorService;
 import com.singularity.ee.util.spi.IAgentScheduledFuture;
+
+import java.util.Properties;
 
 public class TaggingService implements IDynamicService {
 
@@ -87,7 +91,16 @@ public class TaggingService implements IDynamicService {
 
     private IAgentRunnable createTask(ServiceComponent serviceComponent) {
         logger.info("Creating Task for "+ MetaData.SERVICENAME);
-        return new GCPTaggingTask( this, this.agentNodeProperties, serviceComponent, iServiceContext);
+        try {
+            try {
+                return new GCPTaggingTask(this, this.agentNodeProperties, serviceComponent, iServiceContext);
+            } catch (NotRunningOnException notRunningOnException) {
+                    logger.debug("This agent doesn't seem to be running on Google Cloud");
+            }
+        } catch (ConfigurationException e) {
+            logger.error("Not able to start Google Cloud Tag Service Task: "+ e.toString());
+        }
+        return null;
     }
 
     @Override
