@@ -27,18 +27,18 @@ public class BatchTaggingRequest {
     public BatchTaggingRequest (GCEInstance gceInstance, IConfigurationChannel iConfigChannel) {
         this.entityType = EntityType.Node.convertToAPIEntityType();
         Map<String,String> map = new HashMap<>();
-        map.put("GCE|id", gceInstance.id);
-        map.put("GCE|name", gceInstance.name);
-        map.put("GCE|description", gceInstance.description);
-        map.put("GCE|zone", gceInstance.zone);
-        map.put("GCE|machineType", gceInstance.machineType);
-        map.put("GCE|status", gceInstance.status);
-        map.put("GCE|statusMessage", gceInstance.statusMessage);
-        map.put("GCE|selfLink", gceInstance.selfLink);
-        map.put("GCE|cpuPlatform", gceInstance.cpuPlatform);
-        map.put("GCE|reservationAffinity", gceInstance.reservationAffinity);
+        map.put("GCP|id", gceInstance.id);
+        map.put("GCP|name", gceInstance.name);
+        map.put("GCP|description", gceInstance.description);
+        map.put("GCP|zone", gceInstance.zone);
+        map.put("GCP|machineType", gceInstance.machineType);
+        map.put("GCP|status", gceInstance.status);
+        map.put("GCP|statusMessage", gceInstance.statusMessage);
+        map.put("GCP|selfLink", gceInstance.selfLink);
+        map.put("GCP|cpuPlatform", gceInstance.cpuPlatform);
+        map.put("GCP|reservationAffinity", gceInstance.reservationAffinity);
         for(Map.Entry entry : gceInstance.labels.entrySet())
-            map.put("GCE|Label|"+entry.getKey(), (String) entry.getValue());
+            map.put("GCP|Label|"+entry.getKey(), (String) entry.getValue());
         addEntity(iConfigChannel.getComponentNodeName(), iConfigChannel.getNodeID(), map);
     }
 
